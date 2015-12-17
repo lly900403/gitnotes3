@@ -76,28 +76,13 @@ PRIM=PRIM(end:-1:1,:);
 Factors=Factors(end:-1:1,:);
 Dates=Dates(end:-1:1);
 
-for nn=1 : numberoffund
-    
-TargetFundID= UserFilteredFundID(nn);
-%NFirstHalf=input('\nPlease type in the number of observations to be used for in-sample analysis:\n');
-%PValThreshold=input('\nPlease type in a number between 0 and 1 as the p-value threshold for each individual factor:\n');
-%CoefficientThreshold=input('\nPlease type in a positive number as the Coefficient Threshold:\n');
-
-TargetFund=Funds(:,TargetFundID);
-
-% Cut NaN dates
-Dates=Dates(not(isnan(TargetFund)));
-Factors=Factors(not(isnan(TargetFund)),:);
-TargetFund=TargetFund(not(isnan(TargetFund)));
-UserFilteredFactorID=UserFilteredFactorID(sum(isnan(Factors(:,UserFilteredFactorID)))==0);  %filter out factors with incomplete data
-
 % Set parameters
 NMonth=length(Dates);
 NFirstHalf=NMonth;
 Periods{1}=(1:NFirstHalf)';
 Periods{2}=(NFirstHalf+1:NMonth)';
 NFactors=5;
-NFactors=min(NFactors,length(UserFilteredFactorID));
+NFactors=min(NFactors,Totalnumoffactors);
 whichstats={'tstat','adjrsquare','rsquare','yhat'};
 
 % declare variable
@@ -128,9 +113,9 @@ NTrials=size(FactorIDCombo,1);                                                  
 SameVolFactorPortfolio=zeros(NMonth,1);
 
 
-FactorExposure = zeros(numberoffund,length(UserFilteredFactorID));
-PValFactor = zeros(numberoffund,length(UserFilteredFactorID));
-SignificantFactor = zeros(numberoffund,length(UserFilteredFactorID));
+FactorExposure = zeros(numberoffund,Totalnumoffactors);
+PValFactor = zeros(numberoffund,Totalnumoffactors);
+SignificantFactor = zeros(numberoffund,Totalnumoffactors);
 Pvalue=input('\nPlease type in the Significance Level:\n');
 
     
