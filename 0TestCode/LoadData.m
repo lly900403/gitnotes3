@@ -17,13 +17,22 @@ else
 end
     
 Factors=cell2mat(TempDataRawFactors(2:end,2:end));
+%All of the factors should be volatility adjusted
+%for i=1:size(Factors,2)
+%    Factors(:,i)= Factors(:,i)/std(Factors(:,i));
+%end
 FactorID=mat2cell([1:length(FactorNames)],[1],ones(length(FactorNames),1));
+
 
 % Load fund data
 [TempData1,TempData2 , TempDataRawFunds] = xlsread('Funds part1.xlsx');
 FundNames=TempDataRawFunds(1,2:end);
 Funds=cell2mat(TempDataRawFunds(2:end,2:end));
 FundID=mat2cell([1:length(FundNames)],[1],ones(length(FundNames),1));
+
+% Load PRIM data
+[TempData1,TempData2 , TempDataRawPRIM] = xlsread('PRIM_Monthly.xlsx');
+PRIM=cell2mat(TempDataRawPRIM(2:end,2:end));
 
 % Load factor descriptions
 [TempData1,TempData2 , TempDataRawDescriptions] = xlsread('FactorDescription.xlsx');
